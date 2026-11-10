@@ -1,18 +1,20 @@
-import {Table,Model,Column,DataType,HasMany,BelongsTo,ForeignKey} from 'sequelize-typescript'
-
+import { Table, Column, Model, DataType, HasMany, BelongsTo, ForeignKey, AllowNull } from 'sequelize-typescript'
 @Table({
-    tableName:'budgets'
+    tableName: 'budgets'
 })
 
 class Budget extends Model {
-@Column({
-type: DataType.STRING(100)
-})
-name:string
-@Column({
-type: DataType.DECIMAL
-})
-amount:number
+    @AllowNull(false)
+    @Column({
+        type: DataType.STRING(100)
+    })
+    declare name: string
+
+    @AllowNull(false)
+    @Column({
+        type: DataType.DECIMAL
+    })
+    declare amount: number
 }
 
 export default Budget
