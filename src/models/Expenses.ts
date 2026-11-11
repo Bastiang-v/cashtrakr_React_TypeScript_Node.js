@@ -6,11 +6,12 @@ import Budget from './Budget'
 })
 
 class Expense extends Model {
+    @AllowNull(false)
     @Column({
         type: DataType.STRING(100)
     })
     declare name: string
-
+    @AllowNull(false)
     @Column({
         type: DataType.DECIMAL
     })

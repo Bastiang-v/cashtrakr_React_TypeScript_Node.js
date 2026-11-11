@@ -1,5 +1,6 @@
 import { Table, Column, Model, DataType, HasMany, BelongsTo, ForeignKey, AllowNull } from 'sequelize-typescript'
 import Expense from './Expenses'
+import User from './User'
 @Table({
     tableName: 'budgets'
 })
@@ -23,6 +24,12 @@ class Budget extends Model {
     })
     declare expenses: Expense[]
 
+
+    @ForeignKey(() => User)
+    declare userId: number
+
+    @BelongsTo(() => User)
+    declare user: User
 
 }
 
