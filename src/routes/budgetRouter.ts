@@ -3,13 +3,16 @@ import { body, param } from 'express-validator'
 import { BudgetController } from '../controllers/BudgetController';
 import { handleInputErrors } from '../middleware/validation';
 import { validateBudgetExist, validateBudgetId, validateBudgetInput } from '../middleware/budget';
+import { ExpensesController } from '../controllers/ExpensesController';
+import { validateExpenseExist, validateExpenseId, validateExpenseInput } from '../middleware/expense';
 
 
 const router = Router();
 
-router.param('idBuget', validateBudgetId)
-router.param('idBuget', validateBudgetExist)
-
+router.param('budgetId', validateBudgetId)
+router.param('budgetId', validateBudgetExist)
+router.param('expenseId', validateExpenseId)
+router.param('expenseId', validateExpenseExist)
 router.get('/', BudgetController.getAll)
 
 router.post('/',
@@ -17,20 +20,30 @@ router.post('/',
     handleInputErrors,
     BudgetController.create)
 
-router.get('/:idBuget',
+router.get('/:budgetId',
     BudgetController.getByid)
 
-router.put('/:idBuget',
-    body('name').notEmpty().withMessage('el nombre del presupuesto no puede ir vacio'),
-    body('amount')
-        .notEmpty().withMessage('la cantidad presupuesto no puede ir vacio')
-        .isNumeric().withMessage('Cantidad no valida')
-        .custom(value => value > 0).withMessage('El presupuesto debe ser mayor a 0'),
+router.put('/:budgetId',
+    validateBudgetInput,
     handleInputErrors,
     BudgetController.updateById)
 
-router.delete('/:idBuget',
+router.delete('/:budgetId',
     handleInputErrors,
     BudgetController.deleteById)
+//Router for expenses
+router.post('/:budgetId/expenses',
+    validateExpenseInput,
+    handleInputErrors,
+    ExpensesController.create)
+
+router.get('/:budgetId/expenses/:expenseId', ExpensesController.getById)
+
+router.put('/:budgetId/expenses/:expenseId',
+    validateExpenseInput,
+    handleInputErrors,
+    ExpensesController.updateById)
+
+router.delete('/:budgetId/expenses/:expenseId', ExpensesController.deleteById)
 
 export default router
