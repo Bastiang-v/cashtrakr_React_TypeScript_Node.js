@@ -13,13 +13,13 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     const bearer = req.headers.authorization
     if (!bearer) {
         const error = new Error('No Autorizado')
-        return res.status(401).json({ msg: error.message })
+        return res.status(401).json({ error: error.message })
     }
 
     const [, token] = bearer.split(' ')
     if (!token) {
         const error = new Error('Token no valido')
-        return res.status(401).json({ msg: error.message })
+        return res.status(401).json({ error: error.message })
     }
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
