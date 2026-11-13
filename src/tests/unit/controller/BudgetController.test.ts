@@ -1,12 +1,12 @@
 
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { createRequest, createResponse } from 'node-mocks-http'
-import { budgets } from '../Mocks/budget'
-import { BudgetController } from '../../controllers/BudgetController';
-import Budget from '../../models/Budget';
-import Expense from '../../models/Expenses';
+import { budgets } from '../../Mocks/budget'
+import { BudgetController } from '../../../controllers/BudgetController';
+import Budget from '../../../models/Budget';
+import Expense from '../../../models/Expenses';
 
-jest.mock('../../models/Budget', () => {
+jest.mock('../../../models/Budget', () => {
     return {
         __esModule: true,
        default: {
