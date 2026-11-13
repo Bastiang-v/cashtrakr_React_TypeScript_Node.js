@@ -1,33 +1,30 @@
-import type { Request, Response } from 'express'
-import Expense from '../models/Expenses'
+import type { Request, Response } from "express";
+import Expense from "../models/Expenses";
 
 export class ExpensesController {
-
-    static create = async (req: Request, res: Response) => {
-        try {
-            const expense = await Expense.create(req.body)
-            expense.budgetId = req.budget.id
-            await expense.save()
-            res.status(201).json('Gasto Agregado Correctamente')
-        } catch (error) {
-            // console.log(error)
-            res.status(500).json({ error: 'Hubo un error' })
-        }
-
+  static create = async (req: Request, res: Response) => {
+    try {
+      const expense = await Expense.create(req.body);
+      expense.budgetId = req.budget.id;
+      await expense.save();
+      res.status(201).json("Gasto Agregado Correctamente");
+    } catch (error) {
+      // console.log(error)
+      res.status(500).json({ error: "Hubo un error" });
     }
+  };
 
-    static getById = async (req: Request, res: Response) => {
-        res.json(req.expense)
-    }
+  static getById = async (req: Request, res: Response) => {
+    res.json(req.expense);
+  };
 
-    static updateById = async (req: Request, res: Response) => {
-        req.expense.update(req.body)
-        res.json('Se actualizo correctamente')
+  static updateById = async (req: Request, res: Response) => {
+    req.expense.update(req.body);
+    res.json("Se actualizo correctamente");
+  };
 
-    }
-
-    static deleteById = async (req: Request, res: Response) => {
-        await req.expense.destroy()
-        res.json('Gasto Eliminado')
-    }
+  static deleteById = async (req: Request, res: Response) => {
+    await req.expense.destroy();
+    res.json("Gasto Eliminado");
+  };
 }

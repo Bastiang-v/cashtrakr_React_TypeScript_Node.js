@@ -1,56 +1,49 @@
-import type { Request, Response } from "express"
-import Budget from "../models/Budget"
-import Expense from "../models/Expenses"
+import type { Request, Response } from "express";
+import Budget from "../models/Budget";
+import Expense from "../models/Expenses";
 
 export class BudgetController {
+  static getAll = async (req: Request, res: Response) => {
+    try {
+      const budgets = await Budget.findAll({
+        order: [["createdAt", "DESC"]],
+        where: {
+          userId: req.user.id, // Filtrar presupuestos por el ID del usuario autenticado
+        },
+      });
 
-    static getAll = async (req: Request, res: Response) => {
-        try {
-            const budgets = await Budget.findAll({
-                order: [
-                    ['createdAt', 'DESC']
-                ],
-                where: {
-                    userId: req.user.id // Filtrar presupuestos por el ID del usuario autenticado
-                }
-            })
-
-            res.json(budgets)
-        } catch (error) {
-            res.status(500).json({ error: 'Hubo un error' })
-        }
-
+      res.json(budgets);
+    } catch (error) {
+      res.status(500).json({ error: "Hubo un error" });
     }
+  };
 
-    static create = async (req: Request, res: Response) => {
-        try {
-            const budget = await Budget.create(req.body)
-            budget.userId = req.user.id // Asignar el ID del usuario autenticado al presupuesto
-            await budget.save()
-            res.status(201).json('Presupuesto Creado Correctamente')
-        } catch (errror) {
-            res.status(500).json({ error: 'Hubo un error' })
-        }
-
+  static create = async (req: Request, res: Response) => {
+    try {
+      const budget = await Budget.create(req.body);
+      budget.userId = req.user.id; // Asignar el ID del usuario autenticado al presupuesto
+      await budget.save();
+      res.status(201).json("Presupuesto Creado Correctamente");
+    } catch (errror) {
+      res.status(500).json({ error: "Hubo un error" });
     }
+  };
 
-    static getByid = async (req: Request, res: Response) => {
-        const budget = await Budget.findByPk(req.budget.id, {
-            include: [Expense]
-        })
+  static getByid = async (req: Request, res: Response) => {
+    const budget = await Budget.findByPk(req.budget.id, {
+      include: [Expense],
+    });
 
-        res.json(budget)
-    }
+    res.json(budget);
+  };
 
-    static updateById = async (req: Request, res: Response) => {
-        await req.budget.update(req.body)
-        res.json('Presupuesto Actualizado Correctamente')
-    }
+  static updateById = async (req: Request, res: Response) => {
+    await req.budget.update(req.body);
+    res.json("Presupuesto Actualizado Correctamente");
+  };
 
-
-    static deleteById = async (req: Request, res: Response) => {
-        await req.budget.destroy()
-        res.json('Presupuesto Eliminado Correctamente')
-    }
-
+  static deleteById = async (req: Request, res: Response) => {
+    await req.budget.destroy();
+    res.json("Presupuesto Eliminado Correctamente");
+  };
 }
