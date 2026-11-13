@@ -10,7 +10,8 @@
     "dev:api": "nodemon src/index.ts --api",
     "build": "tsc",
     "start": "node ./dist/index.js",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -34,9 +35,11 @@
     "@types/mocha": "^10.0.10",
     "@types/morgan": "^1.9.10",
     "@types/nodemailer": "^8.0.2",
+    "@types/supertest": "^7.2.1",
     "jest": "^30.5.2",
     "node-mocks-http": "^1.18.1",
     "nodemon": "^3.1.14",
+    "supertest": "^7.3.2",
     "ts-jest": "^29.4.15",
     "ts-node": "^10.9.2",
     "typescript": "6.0.3"
