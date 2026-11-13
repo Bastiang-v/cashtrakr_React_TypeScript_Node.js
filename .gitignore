@@ -1,15 +1,5 @@
-# Dependencias
-node_modules/
-
-# Archivos de entorno y secretos
 .env
-.env.local
-
-# Archivos del sistema operativo
+node_modules/
+package-lock.json
 .DS_Store
-Thumbs.db
-
-# Compilación y logs
-*.log
-dist/
-build/
+dist

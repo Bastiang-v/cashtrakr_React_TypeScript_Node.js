@@ -104,7 +104,7 @@ describe("AuthController.login", () => {
     await AuthController.login(req, res);
     const data = res._getJSONData();
     expect(res.statusCode).toBe(403);
-    expect(data).toEqual({ error: "Tu cuenta no ha sido confirmada" });
+    expect(data).toEqual({ error: "La cuenta no ha sido confirmada" });
   });
   it("should return 401 if the password is incorrect", async () => {
     const userMock = {

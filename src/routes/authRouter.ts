@@ -22,10 +22,7 @@ router.post(
 //confirmar cuenta
 router.post(
   "/confirm-account",
-  body("token")
-    .notEmpty()
-    .isLength({ min: 6, max: 6 })
-    .withMessage("Token no valido"),
+  body("token").isLength({ min: 6, max: 6 }).withMessage("Token no valido"),
   handleInputErrors,
   AuthController.confirmAccount,
 );
